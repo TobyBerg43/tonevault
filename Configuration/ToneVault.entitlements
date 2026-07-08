@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Intentionally minimal. ToneVault ships 100% local with no network, no
+	  CloudKit, no push. If you later opt into optional iCloud sync, add:
+	    com.apple.developer.icloud-container-identifiers
+	    com.apple.developer.icloud-services  (CloudKit)
+	  and enable the iCloud capability. Do NOT enable it for the pure-local ship.
+	-->
+</dict>
+</plist>

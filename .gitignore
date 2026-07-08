@@ -1,0 +1,27 @@
+# Xcode / build
+build/
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+xcuserdata/
+*.xcuserstate
+*.moved-aside
+
+# XcodeGen generates the project; keep it out of version control.
+ToneVault.xcodeproj/
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+
+# macOS
+.DS_Store
+*.swp
+
+# Fastlane / secrets (if you add them later)
+*.p8
+*.p12
+*.mobileprovision
+.env

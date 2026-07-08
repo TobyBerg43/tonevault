@@ -1,0 +1,30 @@
+{
+  "identifier" : "TONEVAULT_LOCAL_STOREKIT",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "5.99",
+      "familyShareable" : false,
+      "internalID" : "TONEVAULT_PRO_INTERNAL",
+      "localizations" : [
+        {
+          "description" : "Unlock unlimited gear, tones, songs and setlists, audio clip attachments, and PDF rig export. One-time purchase — not a subscription.",
+          "displayName" : "ToneVault Pro",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.yourorg.tonevault.pro",
+      "referenceName" : "ToneVault Pro",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingIssuesEnabled" : false
+  },
+  "subscriptionGroups" : [],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
