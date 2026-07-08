@@ -138,9 +138,9 @@ struct PaywallView: View {
 enum LegalLinks {
     /// Apple's standard EULA (used because we ship no custom website).
     static let eula = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    /// Replace this with YOUR free-hosted privacy URL (see SUBMISSION.md).
-    /// The same text is also shown in-app under Settings → Privacy.
-    static let privacyPolicy = URL(string: "https://example.com/tonevault-privacy")!
+    /// Free-hosted privacy URL (GitHub Pages). The same text is also shown
+    /// in-app under Settings → Privacy.
+    static let privacyPolicy = URL(string: "https://tobyberg43.github.io/tonevault/privacy.html")!
 }
 
 #if DEBUG
