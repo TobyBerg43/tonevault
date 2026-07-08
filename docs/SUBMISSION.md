@@ -62,12 +62,12 @@ ToneVault collects nothing, so in App Store Connect → your app → **App Priva
 
 ## 5. Privacy Policy URL — free hosting, no domain
 
-App Store Connect **requires** a reachable Privacy Policy URL. You don't own a domain, and you don't need one. The exact same text is already shown in-app (**Settings → Privacy**), so hosting is only to satisfy the URL field. The text to host is `Docs/PRIVACY_POLICY.md` (and a ready-made `Docs/privacy.html`).
+App Store Connect **requires** a reachable Privacy Policy URL. You don't own a domain, and you don't need one. The exact same text is already shown in-app (**Settings → Privacy**), so hosting is only to satisfy the URL field. The text to host is `docs/PRIVACY_POLICY.md` (and a ready-made `docs/privacy.html`).
 
 Pick **one** of these free options:
 
 ### Option A — GitHub Pages (recommended, gives a clean URL)
-1. This repo is already on GitHub (see README). In the repo, add the file `docs/privacy.html` (already provided at `Docs/privacy.html` — copy it to a top-level `/docs` folder, or keep `/docs` as the Pages source).
+1. The repo already contains `docs/privacy.html` in the (lowercase) `/docs` folder Pages expects — nothing to move.
 2. GitHub → repo **Settings → Pages** → Source: **Deploy from a branch** → Branch: `main`, Folder: `/docs` → Save.
 3. Wait ~1 minute. Your URL will be:
    ```
@@ -76,7 +76,7 @@ Pick **one** of these free options:
 4. Open it in a browser to confirm it loads, then **paste that URL** into App Store Connect → App Information → **Privacy Policy URL**, and into `LegalLinks.privacyPolicy` in `PaywallView.swift` (replace the `example.com` placeholder), then re-archive.
 
 ### Option B — Public GitHub Gist
-1. Go to https://gist.github.com → new **public** gist → filename `tonevault-privacy.md` → paste the contents of `Docs/PRIVACY_POLICY.md` → **Create public gist**.
+1. Go to https://gist.github.com → new **public** gist → filename `tonevault-privacy.md` → paste the contents of `docs/PRIVACY_POLICY.md` → **Create public gist**.
 2. Use the gist's page URL (e.g. `https://gist.github.com/<user>/<id>`) as the Privacy Policy URL. It renders the Markdown and is publicly reachable.
 
 ### Option C — Free pastebin-style page (no account needed)

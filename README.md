@@ -37,8 +37,7 @@ ToneVault/
 │  └─ Assets.xcassets/         # App icon + accent color
 ├─ ToneVaultTests/             # Unit tests (see Docs/TESTPLAN.md)
 ├─ Marketing/                  # Screenshot generator + 6 App Store screenshots
-├─ docs/privacy.html           # Free-hostable privacy page (GitHub Pages)
-└─ Docs/                       # SUBMISSION, DECISIONS, TESTPLAN, ASO, PRIVACY_POLICY
+└─ docs/                       # SUBMISSION, DECISIONS, TESTPLAN, ASO, PRIVACY_POLICY + privacy.html (GitHub Pages)
 ```
 
 ## Build & run
@@ -55,7 +54,7 @@ xcodebuild test -scheme ToneVault -destination 'platform=iOS Simulator,name=iPho
 ```
 
 ## Shipping it
-See **[Docs/SUBMISSION.md](Docs/SUBMISSION.md)** — a step-by-step App Store checklist covering the IAP, the "Data Not Collected" privacy label, free privacy-policy hosting (no domain needed), export compliance, screenshots, and every known rejection trigger.
+See **[docs/SUBMISSION.md](docs/SUBMISSION.md)** — a step-by-step App Store checklist covering the IAP, the "Data Not Collected" privacy label, free privacy-policy hosting (no domain needed), export compliance, screenshots, and every known rejection trigger.
 
 ## Legal
 Generic control templates only — **no bundled brand database, no manufacturer logos**. Gear names are entered by the user. Not affiliated with or endorsed by any pedal or amplifier manufacturer. Terms of Use = Apple's standard EULA.
