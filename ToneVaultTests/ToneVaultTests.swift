@@ -159,6 +159,75 @@ final class ToneVaultTests: XCTestCase {
         XCTAssertEqual(restoredSetlist?.orderedSongs.first?.title, "Song A")
     }
 
+    // MARK: - Sample content (onboarding)
+
+    @MainActor
+    func testSampleContentInstallsOnceOnly() throws {
+        let ctx = try makeContext()
+        let pedal = SampleContent.install(in: ctx)
+        XCTAssertNotNil(pedal)
+        XCTAssertEqual(pedal?.name, SampleContent.gearName)
+        XCTAssertEqual(pedal?.template, .threeKnob)
+
+        let tones = try ctx.fetch(FetchDescriptor<ToneSetting>())
+        XCTAssertEqual(tones.count, 2)
+        // Every tone has a full set of seeded, non-default-looking values.
+        for tone in tones {
+            XCTAssertEqual(tone.controlValues?.count, 3)
+        }
+        let crunch = tones.first { $0.name == "Crunch rhythm" }
+        XCTAssertEqual(crunch?.sortedControlValues.map(\.value), [6.5, 4.0, 5.5])
+
+        // Second install is a no-op.
+        XCTAssertNil(SampleContent.install(in: ctx))
+        XCTAssertEqual(try ctx.fetch(FetchDescriptor<Gear>()).count, 1)
+        XCTAssertEqual(try ctx.fetch(FetchDescriptor<ToneSetting>()).count, 2)
+    }
+
+    // MARK: - Search
+
+    @MainActor
+    func testSearchFilterMatching() throws {
+        let ctx = try makeContext()
+        let gear = Gear(name: "Blües Drivér", type: .pedal, template: .threeKnob)
+        ctx.insert(gear)
+        let tone = ToneSetting(name: "Solo boost", gear: gear, notes: "for the bridge")
+        ctx.insert(tone)
+        let song = Song(title: "Midnight Run", artist: "The Locals")
+        ctx.insert(song)
+
+        // Case- and diacritic-insensitive, substring, empty query matches all.
+        XCTAssertTrue(SearchFilter.gearMatches(gear, query: "blues dri"))
+        XCTAssertTrue(SearchFilter.gearMatches(gear, query: "  "))
+        XCTAssertFalse(SearchFilter.gearMatches(gear, query: "fuzz"))
+        // Tones match on their own name, gear name, or notes.
+        XCTAssertTrue(SearchFilter.toneMatches(tone, query: "SOLO"))
+        XCTAssertTrue(SearchFilter.toneMatches(tone, query: "bluès"))
+        XCTAssertTrue(SearchFilter.toneMatches(tone, query: "bridge"))
+        XCTAssertFalse(SearchFilter.toneMatches(tone, query: "chorus"))
+        // Songs match title or artist.
+        XCTAssertTrue(SearchFilter.songMatches(song, query: "midnight"))
+        XCTAssertTrue(SearchFilter.songMatches(song, query: "locals"))
+        XCTAssertFalse(SearchFilter.songMatches(song, query: "sunrise"))
+    }
+
+    // MARK: - Share card
+
+    @MainActor
+    func testToneShareCardRenders() throws {
+        let ctx = try makeContext()
+        let gear = Gear(name: "Share Pedal", type: .pedal, template: .ampHead)
+        ctx.insert(gear)
+        let tone = ToneSetting(name: "Big lead", gear: gear)
+        ctx.insert(tone)
+        tone.syncControlValues(in: ctx)
+
+        let image = ToneCardRenderer.render(setting: tone, style: .clock)
+        XCTAssertNotNil(image)
+        XCTAssertGreaterThan(image?.size.width ?? 0, 300)
+        XCTAssertGreaterThan(image?.size.height ?? 0, 100)
+    }
+
     // MARK: - Free-tier gating
 
     @MainActor

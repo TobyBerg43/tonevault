@@ -11,6 +11,8 @@ struct ToneSettingDetailView: View {
 
     @State private var showingEditor = false
     @State private var showingPaywall = false
+    @State private var shareImage: UIImage?
+    @State private var showingShare = false
     @StateObject private var player = AudioPlayerController()
 
     private var style: KnobDisplayStyle { KnobDisplayStyle(rawValue: styleRaw) ?? .numeric }
@@ -65,6 +67,7 @@ struct ToneSettingDetailView: View {
                               systemImage: setting.isFavorite ? "star.slash" : "star")
                     }
                     Button { cloneTapped() } label: { Label("Clone & tweak", systemImage: "plus.square.on.square") }
+                    Button { shareTapped() } label: { Label("Share as image", systemImage: "square.and.arrow.up") }
                 } label: { Image(systemName: "ellipsis.circle") }
             }
         }
@@ -74,7 +77,20 @@ struct ToneSettingDetailView: View {
             }
         }
         .sheet(isPresented: $showingPaywall) { PaywallView() }
+        .sheet(isPresented: $showingShare) {
+            if let shareImage { ShareSheet(items: [shareImage]) }
+        }
         .onDisappear { player.stop() }
+    }
+
+    /// Renders the tone as a clean dark card image and opens the share sheet.
+    /// Free feature — sharing a tone is how friends discover the app.
+    private func shareTapped() {
+        if let image = ToneCardRenderer.render(setting: setting, style: style) {
+            shareImage = image
+            showingShare = true
+            Haptics.selection()
+        }
     }
 
     private var header: some View {
