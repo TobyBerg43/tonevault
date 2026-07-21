@@ -13,8 +13,21 @@ struct LibraryView: View {
 
     @State private var showingNewGear = false
     @State private var showingPaywall = false
+    @State private var searchText = ""
 
     private var lastUsed: ToneSetting? { recentSettings.first }
+
+    private var isSearching: Bool {
+        !searchText.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    private var filteredGear: [Gear] {
+        gear.filter { SearchFilter.gearMatches($0, query: searchText) }
+    }
+
+    private var matchingTones: [ToneSetting] {
+        recentSettings.filter { SearchFilter.toneMatches($0, query: searchText) }
+    }
 
     var body: some View {
         NavigationStack {
@@ -34,6 +47,9 @@ struct LibraryView: View {
                     }
                 } else {
                     listContent
+                        .searchable(text: $searchText,
+                                    placement: .navigationBarDrawer(displayMode: .automatic),
+                                    prompt: "Search gear and tones")
                 }
             }
             .navigationTitle("ToneVault")
@@ -57,6 +73,46 @@ struct LibraryView: View {
 
     private var listContent: some View {
         List {
+            if isSearching {
+                searchResults
+            } else {
+                browseSections
+            }
+        }
+    }
+
+    /// Search mode: matching gear and matching tones, flat.
+    @ViewBuilder
+    private var searchResults: some View {
+        if filteredGear.isEmpty && matchingTones.isEmpty {
+            ContentUnavailableView.search(text: searchText)
+        }
+        if !filteredGear.isEmpty {
+            Section("Gear") {
+                ForEach(filteredGear) { g in
+                    NavigationLink {
+                        GearDetailView(gear: g)
+                    } label: {
+                        GearRow(gear: g)
+                    }
+                }
+            }
+        }
+        if !matchingTones.isEmpty {
+            Section("Tones") {
+                ForEach(matchingTones) { setting in
+                    NavigationLink {
+                        ToneSettingDetailView(setting: setting)
+                    } label: {
+                        ToneSettingRow(setting: setting)
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var browseSections: some View {
             if let lastUsed {
                 Section("Recall last used") {
                     NavigationLink {
@@ -98,7 +154,6 @@ struct LibraryView: View {
                     ) { showingPaywall = true }
                 }
             }
-        }
     }
 
     private func addGearTapped() {

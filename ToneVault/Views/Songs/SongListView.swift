@@ -5,6 +5,11 @@ struct SongListView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \Song.title) private var songs: [Song]
     @State private var showingNew = false
+    @State private var searchText = ""
+
+    private var filteredSongs: [Song] {
+        songs.filter { SearchFilter.songMatches($0, query: searchText) }
+    }
 
     var body: some View {
         NavigationStack {
@@ -20,7 +25,7 @@ struct SongListView: View {
                     }
                 } else {
                     List {
-                        ForEach(songs) { song in
+                        ForEach(filteredSongs) { song in
                             NavigationLink {
                                 SongDetailView(song: song)
                             } label: {
@@ -33,6 +38,12 @@ struct SongListView: View {
                             }
                         }
                         .onDelete(perform: delete)
+                    }
+                    .searchable(text: $searchText, prompt: "Search songs")
+                    .overlay {
+                        if filteredSongs.isEmpty && !searchText.isEmpty {
+                            ContentUnavailableView.search(text: searchText)
+                        }
                     }
                 }
             }
@@ -56,7 +67,8 @@ struct SongListView: View {
     }
 
     private func delete(_ offsets: IndexSet) {
-        for i in offsets { context.delete(songs[i]) }
+        let visible = filteredSongs
+        for i in offsets { context.delete(visible[i]) }
     }
 }
 
