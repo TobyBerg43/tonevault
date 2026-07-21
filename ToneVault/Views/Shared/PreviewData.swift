@@ -4,6 +4,7 @@ import SwiftData
 #if DEBUG
 /// In-memory container with a little sample data for SwiftUI previews only.
 enum PreviewData {
+    @MainActor
     static let container: ModelContainer = {
         let schema = Schema([Gear.self, ToneSetting.self, ControlValue.self, Song.self, Setlist.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)

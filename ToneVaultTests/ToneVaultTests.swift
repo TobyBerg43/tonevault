@@ -6,11 +6,22 @@ final class ToneVaultTests: XCTestCase {
 
     // MARK: - Helpers
 
+    /// Kept alive for the duration of each test: on newer OS runtimes a
+    /// ModelContext does NOT retain its ModelContainer, so a function-local
+    /// container would be deallocated and the first insert would crash.
+    private var container: ModelContainer?
+
+    override func tearDown() {
+        container = nil
+        super.tearDown()
+    }
+
     @MainActor
     private func makeContext() throws -> ModelContext {
         let schema = Schema([Gear.self, ToneSetting.self, ControlValue.self, Song.self, Setlist.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: schema, configurations: [config])
+        self.container = container
         return container.mainContext
     }
 
