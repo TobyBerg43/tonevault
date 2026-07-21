@@ -27,7 +27,7 @@ Re-run `xcodegen generate` any time you add/rename source files. (The generated 
 Two values are placeholders and must be set to yours:
 
 1. In `project.yml` → `settings.base.DEVELOPMENT_TEAM`: paste your 10-character **Team ID** (Apple Developer → Membership).
-2. Bundle identifier is `com.yourorg.tonevault`. To change it, edit `PRODUCT_BUNDLE_IDENTIFIER` in `project.yml` **and** the product IDs below, then re-run `xcodegen generate`.
+2. Bundle identifier is `com.tobyberger.tonevault`. To change it, edit `PRODUCT_BUNDLE_IDENTIFIER` in `project.yml` **and** the product IDs below, then re-run `xcodegen generate`.
 
 Then in Xcode: select the **ToneVault** target → Signing & Capabilities → check **Automatically manage signing** → pick your team. Do the same for the **ToneVaultTests** target.
 
@@ -40,7 +40,7 @@ The app sells exactly one product:
 | Field | Value |
 |---|---|
 | Reference name | `ToneVault Pro` |
-| Product ID | `com.yourorg.tonevault.pro` |
+| Product ID | `com.tobyberger.tonevault.pro` |
 | Type | **Non-Consumable** |
 | Price | **$5.99** (Tier 6 / equivalent) |
 

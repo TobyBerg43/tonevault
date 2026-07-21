@@ -28,8 +28,10 @@ struct SelectorControlView: View {
                 // Center pointer
                 Path { path in
                     let rad = Angle(degrees: angle(for: current) - 90).radians
+                    let dx = CGFloat(cos(rad)) * 26
+                    let dy = CGFloat(sin(rad)) * 26
                     path.move(to: CGPoint(x: 42, y: 42))
-                    path.addLine(to: CGPoint(x: 42 + cos(rad) * 26, y: 42 + sin(rad) * 26))
+                    path.addLine(to: CGPoint(x: 42 + dx, y: 42 + dy))
                 }
                 .stroke(Color.tvAccent, style: StrokeStyle(lineWidth: 3, lineCap: .round))
                 .frame(width: 84, height: 84)
@@ -83,6 +85,6 @@ struct SelectorControlView: View {
 
     private func dotOffset(_ deg: Double, radius: CGFloat) -> CGSize {
         let rad = Angle(degrees: deg - 90).radians
-        return CGSize(width: cos(rad) * radius, height: sin(rad) * radius)
+        return CGSize(width: CGFloat(cos(rad)) * radius, height: CGFloat(sin(rad)) * radius)
     }
 }

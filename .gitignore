@@ -25,3 +25,9 @@ Package.resolved
 *.p12
 *.mobileprovision
 .env
+
+.DS_Store
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate

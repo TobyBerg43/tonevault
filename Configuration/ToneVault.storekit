@@ -13,7 +13,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.yourorg.tonevault.pro",
+      "productID" : "com.tobyberger.tonevault.pro",
       "referenceName" : "ToneVault Pro",
       "type" : "NonConsumable"
     }

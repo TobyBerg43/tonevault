@@ -323,7 +323,7 @@ def screen_paywall():
     status_bar(d)
     draw_knob(s, PHONE_W//2, 230, 72, 0.8, d=d)
     text_center(d, PHONE_W//2, 340, "ToneVault Pro", F_HEAD(58), INK)
-    y = wrap_center(d, PHONE_W//2, 420, "A single one-time purchase. Not a subscription.",
+    y = wrap_center(d, PHONE_W//2, 420, "Everything unlocked with one purchase.",
                     F_MED(34), SUBTLE, PHONE_W-160)
     y += 24
     for txt in ["Unlimited gear, tones & setlists",
@@ -336,9 +336,9 @@ def screen_paywall():
         y += 116
     y += 10
     rounded(d, [60, y, PHONE_W-60, y+108], 24, ACCENT)
-    text_center(d, PHONE_W//2, y+28, "Unlock Pro — $5.99 once", F_BOLD(42), (255,255,255))
+    text_center(d, PHONE_W//2, y+28, "Unlock Pro", F_BOLD(44), (255,255,255))
     y += 140
-    text_center(d, PHONE_W//2, y, "Backup & export are always free.", F_MED(28), SUBTLE)
+    text_center(d, PHONE_W//2, y, "Back up and export your tones anytime.", F_MED(28), SUBTLE)
     return s
 
 SHOTS = [
@@ -352,8 +352,8 @@ SHOTS = [
      "Big, high-contrast settings you can read mid-set.", screen_stage),
     ("05_data.png", "No account. No cloud.",
      "100% offline. Back up and own your data forever.", screen_data),
-    ("06_pro.png", "One-time $5.99. No subscription.",
-     "Unlock everything with a single purchase.", screen_paywall),
+    ("06_pro.png", "Unlock the full vault",
+     "One purchase unlocks everything.", screen_paywall),
 ]
 
 for fname, head, sub, fn in SHOTS:

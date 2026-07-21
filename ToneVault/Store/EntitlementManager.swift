@@ -9,7 +9,7 @@ import SwiftUI
 @MainActor
 final class EntitlementManager: ObservableObject {
 
-    static let productID = "com.yourorg.tonevault.pro"
+    static let productID = "com.tobyberger.tonevault.pro"
 
     /// Free-tier limits (backup/export is always free — never gated).
     static let freeGearLimit = 5
