@@ -27,7 +27,10 @@ struct SetlistDetailView: View {
                 }
                 ForEach(Array(setlist.orderedSongs.enumerated()), id: \.element.id) { index, song in
                     NavigationLink {
-                        StageRigView(song: song, position: index + 1, style: style)
+                        StageView(songs: setlist.orderedSongs,
+                                  title: setlist.name.isEmpty ? "Stage" : setlist.name,
+                                  style: style,
+                                  startIndex: index)
                     } label: {
                         HStack(spacing: 12) {
                             Text("\(index + 1)")
@@ -50,6 +53,21 @@ struct SetlistDetailView: View {
                 }
             } header: {
                 Text("Songs (\(setlist.orderedSongs.count)) — tap for stage view")
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            if !setlist.orderedSongs.isEmpty {
+                NavigationLink {
+                    StageView(songs: setlist.orderedSongs,
+                              title: setlist.name.isEmpty ? "Stage" : setlist.name,
+                              style: style)
+                } label: {
+                    Label("Start stage mode", systemImage: "play.fill")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
             }
         }
         .navigationTitle(setlist.name.isEmpty ? "Setlist" : setlist.name)
@@ -85,69 +103,6 @@ struct SetlistDetailView: View {
             exportURL = url
             showingShare = true
         }
-    }
-}
-
-/// Big, high-contrast, stage-friendly view of one song's full rig.
-struct StageRigView: View {
-    let song: Song
-    let position: Int
-    let style: KnobDisplayStyle
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("#\(position)")
-                        .font(.title3.bold())
-                        .foregroundStyle(.tint)
-                    Text(song.title.isEmpty ? "Untitled" : song.title)
-                        .font(.largeTitle.bold())
-                    if let artist = song.artist, !artist.isEmpty {
-                        Text(artist).font(.title3).foregroundStyle(.secondary)
-                    }
-                }
-
-                if song.sortedSettings.isEmpty {
-                    Text("No tones added to this song.")
-                        .font(.title3).foregroundStyle(.secondary)
-                }
-
-                ForEach(song.sortedSettings) { setting in
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text(setting.gear?.name ?? "Gear")
-                                .font(.title2.bold())
-                            Spacer()
-                            Text(setting.name)
-                                .font(.headline)
-                                .foregroundStyle(.secondary)
-                        }
-                        ForEach(setting.sortedControlValues) { cv in
-                            HStack {
-                                Text(cv.label).font(.title3)
-                                Spacer()
-                                Text(valueString(cv, gear: setting.gear))
-                                    .font(.title3.bold().monospacedDigit())
-                                    .foregroundStyle(.tint)
-                            }
-                            .padding(.vertical, 2)
-                        }
-                    }
-                    .padding()
-                    .background(.quaternary.opacity(0.4), in: RoundedRectangle(cornerRadius: 14))
-                }
-            }
-            .padding()
-        }
-        .navigationTitle("Stage View")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private func valueString(_ cv: ControlValue, gear: Gear?) -> String {
-        let spec = gear?.controls.first { $0.id == cv.controlIndex }
-        return ControlValueFormatter.string(for: cv.value, kind: cv.kind, style: style,
-                                             selectorPositions: spec?.selectorPositions ?? 3)
     }
 }
 

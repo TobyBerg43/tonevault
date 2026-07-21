@@ -46,6 +46,11 @@ struct SongDetailView: View {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Button { showingPicker = true } label: { Label("Add tone", systemImage: "plus") }
+                    NavigationLink {
+                        StageView(songs: [song],
+                                  title: song.title.isEmpty ? "Stage" : song.title,
+                                  style: style)
+                    } label: { Label("Stage view", systemImage: "play.rectangle") }
                     Button { showingEdit = true } label: { Label("Edit song", systemImage: "pencil") }
                     Button { exportPDF() } label: { Label("Export rig PDF", systemImage: "doc.richtext") }
                 } label: { Image(systemName: "ellipsis.circle") }
