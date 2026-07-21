@@ -9,11 +9,26 @@ struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isWorking = false
 
-    private let benefits: [(String, String)] = [
-        ("infinity", "Unlimited gear, tones, songs & setlists"),
-        ("waveform", "Attach audio clips of your tones"),
-        ("doc.richtext", "Export printable PDF rig cheat-sheets"),
-        ("lock.open", "One-time unlock — yours forever")
+    private struct Benefit: Identifiable {
+        let icon: String
+        let title: String
+        let detail: String
+        var id: String { title }
+    }
+
+    private let benefits: [Benefit] = [
+        Benefit(icon: "infinity",
+                title: "Unlimited gear & tones",
+                detail: "Your whole board and every variant — no 5-gear / 10-tone ceiling."),
+        Benefit(icon: "waveform",
+                title: "Audio clip attachments",
+                detail: "Record a few seconds of each tone so your ears can confirm the recall."),
+        Benefit(icon: "doc.richtext",
+                title: "PDF rig cheat-sheets",
+                detail: "Print a song or a whole setlist and tape it to your board."),
+        Benefit(icon: "lock.open",
+                title: "Pay once, keep forever",
+                detail: "One purchase, tied to your Apple ID. No subscription, no recurring charges.")
     ]
 
     var body: some View {
@@ -22,12 +37,18 @@ struct PaywallView: View {
                 VStack(spacing: 24) {
                     header
 
-                    VStack(alignment: .leading, spacing: 16) {
-                        ForEach(benefits, id: \.1) { benefit in
+                    VStack(alignment: .leading, spacing: 18) {
+                        ForEach(benefits) { benefit in
                             Label {
-                                Text(benefit.1).font(.body)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(benefit.title)
+                                        .font(.body.weight(.semibold))
+                                    Text(benefit.detail)
+                                        .font(.footnote)
+                                        .foregroundStyle(.secondary)
+                                }
                             } icon: {
-                                Image(systemName: benefit.0)
+                                Image(systemName: benefit.icon)
                                     .foregroundStyle(.tint)
                                     .frame(width: 28)
                             }
@@ -75,7 +96,7 @@ struct PaywallView: View {
             Image(systemName: "dial.medium.fill")
                 .font(.system(size: 52))
                 .foregroundStyle(.tint)
-            Text("Unlock the full vault")
+            Text("Room for your whole rig")
                 .font(.title2.bold())
             Text("A single one-time purchase. **Not a subscription** — no recurring charges, ever.")
                 .font(.subheadline)
