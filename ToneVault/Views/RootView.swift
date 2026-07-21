@@ -2,6 +2,9 @@ import SwiftUI
 import SwiftData
 
 struct RootView: View {
+    @AppStorage(PrefKey.didSeeWelcome) private var didSeeWelcome = false
+    @State private var showingWelcome = false
+
     var body: some View {
         TabView {
             LibraryView()
@@ -15,6 +18,12 @@ struct RootView: View {
 
             AppSettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape") }
+        }
+        .onAppear {
+            if !didSeeWelcome { showingWelcome = true }
+        }
+        .sheet(isPresented: $showingWelcome) {
+            WelcomeView()
         }
     }
 }
