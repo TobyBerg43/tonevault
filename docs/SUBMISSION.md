@@ -1,5 +1,14 @@
 # ToneVault — App Store Submission Guide
 
+> **v1.1.0 update:** versions in `project.yml` are already bumped (1.1.0 / build 2).
+> For an update release you do NOT re-create the IAP — it stays approved from 1.0.
+> New-version steps: App Store Connect → your app → **+ Version** → `1.1.0` →
+> paste the "What's New" text from `RELEASE_NOTES.md` → upload the new archive →
+> attach the build → Submit. Screenshots and privacy answers carry over unchanged
+> (the 1.1 features don't add any data collection; the new stage view/search/share
+> features are all on-device). If you want fresh screenshots of the new stage
+> mode, regenerate with `Marketing/make_screenshots.py`, but it is optional.
+
 Everything you need to take this repo from source to a submitted build. Paste-ready values are in `code blocks`. Cowork can't submit for you, so this is a checklist you run once.
 
 ---
@@ -24,9 +33,7 @@ Re-run `xcodegen generate` any time you add/rename source files. (The generated 
 
 ## 2. Set your signing identity
 
-Two values are placeholders and must be set to yours:
-
-1. In `project.yml` → `settings.base.DEVELOPMENT_TEAM`: paste your 10-character **Team ID** (Apple Developer → Membership).
+1. `project.yml` → `settings.base.DEVELOPMENT_TEAM` is set to `CPS6QN35C3`. If you ever move teams, update it there and re-run `xcodegen generate`.
 2. Bundle identifier is `com.tobyberger.tonevault`. To change it, edit `PRODUCT_BUNDLE_IDENTIFIER` in `project.yml` **and** the product IDs below, then re-run `xcodegen generate`.
 
 Then in Xcode: select the **ToneVault** target → Signing & Capabilities → check **Automatically manage signing** → pick your team. Do the same for the **ToneVaultTests** target.
